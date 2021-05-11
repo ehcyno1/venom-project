@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const app = express();
 
-const database = require('./app/config/db.connect');
+const dbConnect = require('./app/config/db.connect');
 // const conn = database.getConnection();
 // database.test_open(conn);
 
