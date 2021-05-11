@@ -4,9 +4,22 @@ const cors = require('cors');
 
 const app = express();
 
-const dbConnect = require('./app/config/db.connect');
-// const conn = database.getConnection();
-// database.test_open(conn);
+// const dbConnect = require('./app/config/db.connect');
+
+// use connection pool
+const getConnection = require('./app/config/db.pool.init');
+getConnection( (conn) => {
+    var sql = 'SELECt id, title, description FROM tutorials';
+    conn.query(sql, function(err, results, fields) {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log(results);
+        }
+    })
+
+    conn.release();
+})
 
 var corsOptions = {
     origin: "http://localhost:8081"
