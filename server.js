@@ -16,7 +16,7 @@ getConnection( (conn) => {
         } else {
             console.log(results);
         }
-    })
+    });
 
     conn.release();
 })
