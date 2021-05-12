@@ -1,7 +1,0 @@
-{
-    "host": "localhost",
-    "user": "ehcyno1",
-    "password": "1234qwer",
-    "database": "venom",
-    "connectionLimit": 30
-}
