@@ -1,0 +1,3 @@
+/node_modules
+/app/config/db.config
+/app/config/db.pool.config
