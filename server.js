@@ -18,10 +18,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // connect database
 const db = require("./app/models/");
-/* db.sequelize.sync(); >>> in production */
-/* in development */
+
+/*
+In production 
+db.sequelize.sync();
+ */
+
+/* In development */
 db.sequelize.sync( {force: true}).then( () => {
-    console.log("Drop and re-sync database.");
+    console.log("Drop and re-sync mariaDB tables.");
 });
 
 //simple route
