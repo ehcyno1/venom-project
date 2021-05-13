@@ -1,12 +1,12 @@
-const mysql = require('mysql');
+const mariadb = require('mariadb');
 const dbConfig = require('./db.config');
 
-var db = mysql.createConnection( {
+var database = mariadb.createConnection( {
     host: dbConfig.host,
     port: dbConfig.port,
     user: dbConfig.user,
     password: dbConfig.password,
     database: dbConfig.database
 });
-db.connect();
-module.exports = db;
+database.connect();
+module.exports = database;

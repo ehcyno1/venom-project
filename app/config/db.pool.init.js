@@ -1,14 +1,6 @@
-const mysql = require('mysql');
+const mariadb = require('mariadb');
 const config = require('./db.pool.config.json');
 
-let pool = mysql.createPool(config);
+const connectionPool = mariadb.createPool(config);
 
-function getConnection(callback) {
-    pool.getConnection(function(err,conn) {
-        if(!err) {
-            callback(conn);
-        }
-    });
-}
-
-module.exports = getConnection;
+module.exports = connectionPool;

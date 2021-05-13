@@ -4,23 +4,6 @@ const cors = require('cors');
 
 const app = express();
 
-// const dbConnect = require('./app/config/db.connect');
-
-// use connection pool
-const getConnection = require('./app/config/db.pool.init');
-getConnection( (conn) => {
-    var sql = 'SELECt id, title, description FROM tutorials';
-    conn.query(sql, function(err, results, fields) {
-        if(err) {
-            console.log(err);
-        } else {
-            console.log(results);
-        }
-    });
-
-    conn.release();
-})
-
 var corsOptions = {
     origin: "http://localhost:8081"
 };
@@ -32,6 +15,14 @@ app.use(bodyParser.json());
 
 //parse requests of content-type >>> application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
+
+// connect database
+const db = require("./app/models/");
+/* db.sequelize.sync(); >>> in production */
+/* in development */
+db.sequelize.sync( {force: true}).then( () => {
+    console.log("Drop and re-sync database.");
+});
 
 //simple route
 app.get("/", (req, res) => {
