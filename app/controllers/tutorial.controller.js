@@ -117,7 +117,7 @@ exports.deleteAll = (request, response) => {
         truncate: false
     })
         .then(nums => {
-            response.send({message: `${nums} Tutorials were deleted successfully`);
+            response.send({message: `${nums} Tutorials were deleted successfully`});
         })
         .catch(exception => {
             response.status(500).send({
