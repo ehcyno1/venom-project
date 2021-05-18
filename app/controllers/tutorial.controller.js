@@ -46,7 +46,7 @@ exports.findAll = (request, response) => {
 }
 
 // Find a single Tutorial with an id
-exports.findOne = (reequest, response) => {
+exports.findOne = (request, response) => {
     const id = request.params.id;
 
     Tutorial.findByPk(id)
