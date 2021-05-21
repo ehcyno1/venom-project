@@ -1,11 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
-const path = __dirname + '/app/views/';
-
+var history = require('connect-history-api-fallback');
 const app = express();
 
+app.use(history());
+
+const path = __dirname + '/dist/';
 app.use(express.static(path));
 
 var corsOptions = {
@@ -21,15 +22,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 // connect database
 const db = require("./app/models/");
 
-/*
-In production 
+/* In production */
+
 db.sequelize.sync();
- */
 
 /* In development */
-db.sequelize.sync( {force: true}).then( () => {
-    console.log("Drop and re-sync mariaDB tables.");
-});
+// db.sequelize.sync( {force: true}).then( () => {
+//     console.log("Drop and re-sync mariaDB tables.");
+// });
 
 //simple route
 app.get("/", (req, res) => {

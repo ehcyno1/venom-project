@@ -3,6 +3,21 @@ const db = require("../models");
 const Tutorial = db.tutorials;
 const Op = db.Sequelize.Op;
 
+const getPagination = (page, size) => {
+    const limit = size ? +size : 3;
+    const offset = page ? (page-1) * limit : 0;
+
+    return {limit, offset};
+};
+
+const getPagingData = (data, page, limit) => {
+    const {count:totalItems, rows: tutorials} = data;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return { totalItems, tutorials, totalPages, currentPage};
+};
+
 // Create and Save a new Tutorial
 exports.create = (request, response) => {
     //Validate request
@@ -31,12 +46,18 @@ exports.create = (request, response) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (request, response) => {
-    const title = request.query.title;
+    const {page, size, title} = request.query;
+    console.log(request.query);
+    
     var condition = title ? {title: {[Op.like]: `%${title}%`}} : null;
+    console.log(condition);
 
-    Tutorial.findAll({where:condition})
+    const {limit, offset} = getPagination(page, size);
+
+    Tutorial.findAndCountAll({where:condition, limit, offset})
         .then(data => {
-            response.send(data);
+            const res = getPagingData(data, page, limit);
+            response.send(res);
         })
         .catch(exception => {
             response.status(500).send({
